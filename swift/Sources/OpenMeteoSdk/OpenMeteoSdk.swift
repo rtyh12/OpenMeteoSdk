@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 import FlatBuffers
 
 public typealias WeatherApiResponse = openmeteo_sdk_WeatherApiResponse
@@ -9,7 +12,6 @@ public enum OpenMeteoSdkError: Error {
 }
 
 extension WeatherApiResponse {
-    #if !os(Linux)
     /// Fetch data from a given URL and decode the Open-Meteo Weather API Flatbuffers structure
     @available(iOS 13.0.0, *)
     @available(macOS 12.0, *)
@@ -30,7 +32,6 @@ extension WeatherApiResponse {
         }
         return try WeatherApiResponse.from(data: data, statusCode: res.statusCode)
     }
-    #endif
 }
 
 
